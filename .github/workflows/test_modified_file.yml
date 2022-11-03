@@ -17,4 +17,4 @@ jobs:
           git config --global user.name "Your Name"
           git add test.yaml
           git commit -m "update manifest to version:${{ github.run_number }}"
-          git push -u origin ${GITHUB_REF##*/} '''
+          git push -u origin ${GITHUB_REF##*/}
