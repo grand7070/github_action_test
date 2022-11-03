@@ -12,7 +12,7 @@ jobs:
         id: k8s_manifest_update
         working-directory: ${{ github.workspace }}
         run: |
-          bash "sed -ie 's/test_${GITHUB_REF##*/}:.*/test_${GITHUB_REF##*/}:${{ github.run_number }}/g' test.yaml"
+          sed -ie "s/test_${GITHUB_REF##*/}:.*/test_${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
           bash '''
               git add test.yaml
               git commit -m "update manifest to version:${{ github.run_number }}"
