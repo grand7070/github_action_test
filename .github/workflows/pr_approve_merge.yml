@@ -31,7 +31,7 @@ jobs:
           body: Bump version to reflect release changes
           branch: bump-version
           base: main
-          token: ${{ secrets.PAT }}
+#           token: ${{ secrets.PAT }}
           
       - name: Auto approve
         if: steps.cpr.outputs.pull-request-operation == 'created'
