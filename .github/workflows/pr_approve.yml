@@ -1,4 +1,4 @@
-name: TEST_MODIFIED_FILE
+name: PR_APPROVE
 
 on:
   workflow_dispatch:
