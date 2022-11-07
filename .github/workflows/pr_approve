@@ -1,0 +1,38 @@
+name: TEST_MODIFIED_FILE
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  change_file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Bump Version
+        run: |
+          sed -ie "s/test-${GITHUB_REF##*/}:.*/test-${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add test.yaml
+          git commit -m "update manifest to version:${{ github.run_number }}"
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: bump version
+          title: Bump version
+          body: Bump version to reflect release changes
+          branch: bump-version
+          base: main
+          
+      - name: Pull request number
+        run: |
+          echo "Pull Request Number - ${{ github.event.pull_request.number }}"
+
+      - name: Approve pull Request
+        if: ${{ github.event.pull_request.number }}
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
