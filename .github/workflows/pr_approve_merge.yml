@@ -25,8 +25,6 @@ jobs:
           add-paths: |
             test.yaml
           commit-message: update manifest to version:${{ github.run_number }}
-          committer: GitHub <noreply@github.com>
-          author: grand7070 <grand7070@naver.com>
           title: Update manifest
           body: Update manifest
           base: main
@@ -34,13 +32,13 @@ jobs:
           delete-branch: true
           token: ${{ secrets.PAT }}
           
-#       - name: Enable Pull Request Automerge
-#         if: steps.cpr.outputs.pull-request-operation == 'created'
-#         uses: peter-evans/enable-pull-request-automerge@v2
-#         with:
-#           token: ${{ secrets.PAT }}
-#           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-#           merge-method: squash    
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash    
       
       - name: Auto approve
         if: steps.cpr.outputs.pull-request-operation == 'created'
