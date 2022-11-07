@@ -1,4 +1,4 @@
-name: AUTO_PR
+name: PR
 
 on:
   workflow_dispatch:
@@ -15,6 +15,6 @@ jobs:
         with:
           title: PR TITLE
           body: PR BODY
-          branch: new branch
+          branch: new-branch
           base: main
           token: ${{ secrets.PAT }}
