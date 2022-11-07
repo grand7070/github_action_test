@@ -1,4 +1,4 @@
-name: PR_APPROVE
+name: AUTO_PR
 
 on:
   pull_request:
