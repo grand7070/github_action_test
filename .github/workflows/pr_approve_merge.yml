@@ -17,8 +17,8 @@ jobs:
       - name: Change manifest
         run: |
           sed -ie "s/test-${GITHUB_REF##*/}:.*/test-${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "grand7070@naver.com"
+          git config --global user.name "grand7070"
           git add test.yaml
           git commit -m "update manifest to version:${{ github.run_number }}"
           
@@ -26,12 +26,12 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: Update image version ${{ github.run_number }}
+          commit-message: create pr
           title: Update manifest
           body: Update manifest
           branch: infra/mainfest
           base: main
-#           token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
           
 #       - name: Enable Pull Request Automerge
 #         if: steps.cpr.outputs.pull-request-operation == 'created'
