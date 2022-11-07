@@ -1,6 +1,6 @@
 name: AUTO_PR
 
-# on:
+on:
 #   pull_request:
 #     branches:
 #       - main
