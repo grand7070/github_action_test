@@ -31,7 +31,7 @@ jobs:
           body: Update manifest
           branch: infra/mainfest
           base: main
-          token: ${{ secrets.PAT }}
+#           token: ${{ secrets.PAT }}
           
 #       - name: Enable Pull Request Automerge
 #         if: steps.cpr.outputs.pull-request-operation == 'created'
