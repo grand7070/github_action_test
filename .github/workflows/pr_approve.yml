@@ -1,10 +1,14 @@
 name: PR_APPROVE
 
 on:
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
   
 jobs:
   change_file:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,4 +39,3 @@ jobs:
         uses: hmarr/auto-approve-action@v2
         with:
           github-token: ${{ secrets.PAT }}
-          pull-request-number: ${{ github.event.inputs.pullRequestNumber }}
