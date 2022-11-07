@@ -26,7 +26,6 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: create pr
           title: Update manifest
           body: Update manifest
           branch: infra/mainfest
