@@ -1,0 +1,41 @@
+name: AUTO_PR
+
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types:
+#       - closed
+  workflow_dispatch:
+  
+jobs:
+  change_file:
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Bump Version
+        run: |
+          sed -ie "s/test-${GITHUB_REF##*/}:.*/test-${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add test.yaml
+          git commit -m "update manifest to version:${{ github.run_number }}"
+          
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: bump version
+          title: Bump version
+          body: Bump version to reflect release changes
+          branch: bump-version
+          base: main
+          token: ${{ secrets.PAT }}
+          
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          number: ${{ steps.cpr.outputs.pull-request-number }}
