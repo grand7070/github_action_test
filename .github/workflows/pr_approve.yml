@@ -29,10 +29,9 @@ jobs:
           
       - name: Pull request number
         run: |
-          echo "Pull Request Number - ${{ github.event.pull_request.number }}"
+          echo "Pull Request Number - ${PULL_REQUEST_NUMBER}"
 
       - name: Approve pull Request
-        if: ${{ github.event.pull_request.number }}
         uses: hmarr/auto-approve-action@v2
         with:
           github-token: ${{ secrets.PAT }}
