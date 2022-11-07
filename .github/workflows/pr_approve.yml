@@ -35,5 +35,5 @@ jobs:
         if: ${{ github.event.pull_request.number }}
         uses: hmarr/auto-approve-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT }}
           pull-request-number: ${{ github.event.pull_request.number }}
