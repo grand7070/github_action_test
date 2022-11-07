@@ -40,4 +40,4 @@ jobs:
       - name: Approve pull Request
         uses: hmarr/auto-approve-action@v2
         with:
-          github-token: ${{ secrets.PAT }}
+          pull-request-number: ${PULL_REQUEST_NUMBER}
