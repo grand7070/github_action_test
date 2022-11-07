@@ -13,14 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Bump Version
-        run: |
-          sed -ie "s/test-${GITHUB_REF##*/}:.*/test-${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git add test.yaml
-          git commit -m "update manifest to version:${{ github.run_number }}"
           
       - name: Create Pull Request
         id: cpr
@@ -32,6 +24,14 @@ jobs:
           branch: bump-version
           base: main
           token: ${{ secrets.PAT }}
+      
+      - name: Bump Version
+        run: |
+          sed -ie "s/test-${GITHUB_REF##*/}:.*/test-${GITHUB_REF##*/}:${{ github.run_number }}/g" test.yaml
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add test.yaml
+          git commit -m "update manifest to version:${{ github.run_number }}"
           
 #       - name: Enable Pull Request Automerge
 #         if: steps.cpr.outputs.pull-request-operation == 'created'
