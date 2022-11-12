@@ -1,4 +1,4 @@
-name: CD
+name: ECS_TEST
 
 on:
   workflow_dispatch:
@@ -43,14 +43,15 @@ jobs:
           tags: ${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          
+      - run: |
+          echo "hi"
+          echo ${{ steps.build-image.outputs.image }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          run:
-            echo 'hi'
-            echo ${{ steps.build-image.outputs.image }}
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
