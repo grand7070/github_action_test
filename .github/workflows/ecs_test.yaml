@@ -44,9 +44,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           
-      - run: |
+      - name: RUN
+        run: |
           echo "hi"
-          echo ${{ steps.build-image.outputs.image }}
+          echo ${{ steps.build-image.outputs.imageid }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
