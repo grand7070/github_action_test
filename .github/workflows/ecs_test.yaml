@@ -33,21 +33,23 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push
-        id: build-image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#       - name: Build and push
+#         id: build-image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           builder: ${{ steps.buildx.outputs.name }}
+#           tags: ${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+#           cache-from: type=gha
+#           cache-to: type=gha,mode=max
           
       - name: RUN
+        id: build-image
         run: |
-          echo "hi"
-          echo ${{ steps.build-image.outputs.imageid }}
+          docker build -t ${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
+          docker push ${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          echo "::set-output name=image::${{ steps.login_ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}"
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
