@@ -19,7 +19,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          sudo yum install libvips-dev
+          yum install libvips-dev
           python -m pip install --upgrade pip
           pip install pyvips
           # sudo apt-get update
