@@ -17,17 +17,19 @@ jobs:
           
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
           python -m pip install --upgrade pip
-          pip install skia-python
-          ls
-          zip -r test.zip ./*
-          ls
-          # pip install build
-          # mkdir ./packages
-          # cp ./lambda_defs.py ./packages
-          # pip install -r requirements.txt -t ./packages/
+          pip install pyvips
+          # sudo apt-get update
+          # sudo apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+          # python -m pip install --upgrade pip
+          # pip install skia-python
+          # ls
+          # zip -r test.zip ./*
+          # ls
+          # # pip install build
+          # # mkdir ./packages
+          # # cp ./lambda_defs.py ./packages
+          # # pip install -r requirements.txt -t ./packages/
 
       # - name: Zipping binary
       #   uses: papeloto/action-zip@v1
