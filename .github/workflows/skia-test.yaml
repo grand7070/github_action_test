@@ -5,7 +5,9 @@ on:
 
 jobs:
   build_and_zip_and_push:
-    runs-on: amazonlinux:2
+    runs-on: ubuntu-latest
+    container:
+      image: amazonlinux:1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
