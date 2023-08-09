@@ -1,0 +1,35 @@
+name: skia-test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_zip_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+          python -m pip install --upgrade pip
+          pip install skia-python
+          ls
+          zip -r test.zip ./*
+          ls
+          # pip install build
+          # mkdir ./packages
+          # cp ./lambda_defs.py ./packages
+          # pip install -r requirements.txt -t ./packages/
+
+      # - name: Zipping binary
+      #   uses: papeloto/action-zip@v1
+      #   with: 
+      #     files: .
+      #     dest: test.zip
