@@ -2,7 +2,11 @@ name: libvips-test
 
 on:
   workflow_dispatch:
-
+  
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
   build_and_zip_and_push:
     runs-on: ubuntu-latest
@@ -10,12 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/docker-layers
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+      
       - name: Docker work
         run: |
           cd libvips_test
           docker build --tag pyvips_on_lambda:python39 .
           docker run --name pyvips_on_lambda_container pyvips_on_lambda:python39
           docker cp pyvips_on_lambda_container:/lambda.zip .
+          ls
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -23,9 +36,9 @@ jobs:
           role-to-assume: arn:aws:iam::712977191926:role/GHTest
           aws-region: ap-northeast-2
       
-#       - name: Upload AWS
-#         run: |
-#           aws lambda update-function-code \
-#           --region us-east-1 \
-#           --function-name asdasd \
-#           --zip-file fileb://lambda.zip
+      - name: Upload AWS
+        run: |
+          aws lambda update-function-code \
+          --region us-east-1 \
+          --function-name asdasd \
+          --zip-file fileb://lambda.zip
