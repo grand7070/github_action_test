@@ -2,7 +2,11 @@ name: aws_login_test
 
 on:
   workflow_dispatch:
-
+  
+permissions:
+  id-token: write
+  contents: read
+      
 jobs:
   aws_login:
     runs-on: ubuntu-latest
