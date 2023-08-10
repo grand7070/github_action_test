@@ -1,0 +1,17 @@
+name: aws_login_test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  aws_login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::712977191926:role/GHTest
+          aws-region: ap-northeast-2
