@@ -16,4 +16,16 @@ jobs:
           docker build --tag pyvips_on_lambda:python39 .
           docker run --name pyvips_on_lambda_container pyvips_on_lambda:python39
           docker cp pyvips_on_lambda_container:/lambda.zip .
-          
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::712977191926:role/GHTest
+          aws-region: ap-northeast-2
+      
+#       - name: Upload AWS
+#         run: |
+#           aws lambda update-function-code \
+#           --region us-east-1 \
+#           --function-name asdasd \
+#           --zip-file fileb://lambda.zip
