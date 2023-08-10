@@ -1,4 +1,3 @@
-
 from urllib import parse
 import boto3
 import base64
