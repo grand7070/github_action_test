@@ -12,6 +12,7 @@ RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.
     make && \
     make install
 
-RUN yum install python3 zip -y
 COPY requirements.txt /tmp
-RUN pip3 install -r /tmp/requirements.txt --target ./package
+RUN yum install python3 zip -y && \
+    pip3 install -r /tmp/requirements.txt --target ./package && \
+    zip -r9 /var/task/libvips/ /package/
