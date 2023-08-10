@@ -1,0 +1,2 @@
+pyvips
+boto3
