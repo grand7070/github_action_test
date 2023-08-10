@@ -13,6 +13,7 @@ RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.
     make install
 
 COPY requirements.txt /tmp
+COPY index.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    zip -r9 /var/task/libvips/ /package/
+    zip -r9 lambda.zip /var/task/libvips/ /package/ index.py
