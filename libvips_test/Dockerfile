@@ -16,4 +16,5 @@ COPY requirements.txt /tmp
 COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    zip -r9 lambda.zip /var/task/libvips/ /package/ lambda_function.py
+    cd package && zip -r9 ../lambda.zip . && \
+    cd .. && zip lambda.zip /var/task/libvips/ lambda_function.py
