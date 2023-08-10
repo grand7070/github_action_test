@@ -1,0 +1,3 @@
+import pyvips
+
+print("HI")
