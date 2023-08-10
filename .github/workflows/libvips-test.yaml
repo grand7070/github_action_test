@@ -38,6 +38,7 @@ jobs:
       
       - name: Upload AWS
         run: |
+          cd libvips_test
           aws lambda update-function-code \
           --region us-east-1 \
           --function-name asdasd \
