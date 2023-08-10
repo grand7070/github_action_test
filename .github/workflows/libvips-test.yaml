@@ -1,0 +1,19 @@
+name: libvips-test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_zip_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Docker work
+        run: |
+          cd libvips_test
+          docker build --tag pyvips_on_lambda:python39 .
+          docker run --name pyvips_on_lambda_container pyvips_on_lambda:python39
+          docker cp pyvips_on_lambda_container:/lambda.zip .
+          
