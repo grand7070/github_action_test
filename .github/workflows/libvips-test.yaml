@@ -40,5 +40,5 @@ jobs:
           cd libvips_test
           aws lambda update-function-code \
           --region us-east-1 \
-          --function-name asdasd \
+          --function-name asdasd2 \
           --zip-file fileb://lambda.zip
