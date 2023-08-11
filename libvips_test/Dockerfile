@@ -95,7 +95,8 @@ RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.
     make install
 
 COPY requirements.txt /tmp
-COPY lambda_function.py lambda_function_original.py .
+# COPY lambda_function.py lambda_function_original.py .
+COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
     cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
