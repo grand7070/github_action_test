@@ -5,9 +5,12 @@ RUN yum update -y && \
     yum install wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
 
 # libvips 및 의존성 설치
-RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
-    tar Jxvf vips-8.14.3.tar.xz && \
-    cd vips-8.14.3 && \
+# RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
+#     tar Jxvf vips-8.14.3.tar.xz && \
+#     cd vips-8.14.3 && \
+RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
+    tar xzf vips-8.10.5.tar.gz && \
+    cd vips-8.10.5 && \
     ./configure --prefix=/libvips && \
     make && \
     make install
