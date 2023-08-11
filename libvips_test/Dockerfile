@@ -16,15 +16,20 @@ RUN yum update -y && \
 RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
     tar zxvf vips-8.10.5.tar.gz && \
     cd vips-8.10.5 && \
-    ./configure --prefix=/var/task/libvips && \
+    #./configure --prefix=/var/task/libvips && \
+    ./configure --prefix=/libvips && \
     make && \
-    make install && echo "First!" && ls && echo "Second!" && ls /var/task/libvips
+    make install
+    # && echo "First!" && ls && echo "Second!" && ls /var/task/libvips
 
 COPY requirements.txt /tmp
 COPY lambda_function.py lambda_function_original.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    echo "Third!" && ls && cd package && rm -r *.dist-info __pycache__ && echo "Fourth!" && ls && \
-    zip -r9 ../lambda.zip . /var/task/libvips/ /lambda_function_original.py /lambda_function.py
+    cd package && rm -r *.dist-info __pycache__ && \
+    # && echo "Fourth!" && ls && \
+    zip -r9 ../lambda.zip . && \
+    cd ../libvips && zip -r9 ../lambda.zip . && \
+    cd .. && zip -r9 ../lambda.zip lambda_function_original.py lambda_function.py
     # && \
     # cd .. && echo "Fifth!" && ls && zip lambda.zip /var/task/libvips/ lambda_function_original.py lambda_function.py
