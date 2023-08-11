@@ -5,24 +5,24 @@ RUN yum update -y && \
     yum install wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
 
 # libvips 및 의존성 설치
-RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
-    tar Jxvf vips-8.14.3.tar.xz && \
-    cd vips-8.14.3 && \
-    meson setup build --prefix /libvips && \
-    cd build && \
-    meson compile && \
-    meson test && \
-    meson install
-# RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
-#     tar zxvf vips-8.10.5.tar.gz && \
-#     cd vips-8.10.5 && \
-#     ./configure --prefix=/libvips && \
-#     make && \
-#     make install
+# RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
+#     tar Jxvf vips-8.14.3.tar.xz && \
+#     cd vips-8.14.3 && ls && \
+#     meson setup build --prefix /libvips && ls && \
+#     cd build && ls && \
+#     meson compile && \
+#     meson test && \
+#     meson install && ls
+RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
+    tar zxvf vips-8.10.5.tar.gz && \
+    cd vips-8.10.5 && \
+    ./configure --prefix=/libvips && \
+    make && \
+    make install
 
 COPY requirements.txt /tmp
 COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
-    cd .. && zip lambda.zip /libvips/ lambda_function_original.py lambda_function.py
+    rm -r *.dist-info __pycache__ && ls && cd package && ls && zip -r9 ../lambda.zip . && \
+    cd .. && ls && zip lambda.zip /libvips/ lambda_function_original.py lambda_function.py
