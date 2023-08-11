@@ -104,7 +104,7 @@ RUN yum install python3 zip -y && \
     pip3 install -r $WORK_DIR/requirements.txt --target $WORK_DIR/package && \
     cd $WORK_DIR/package && rm -r *.dist-info __pycache__ && zip -r9 /lambda.zip . && \
     cd $WORK_DIR/libvips && zip -r9 /lambda.zip . && \
-    cd $WORK_DIR && zip -r9 /lambda.zip $WORK_DIR/lambda_function.py
+    cd $WORK_DIR && zip -r9 /lambda.zip lambda_function.py
 # RUN zip -r9 lambda.zip lambda_function.py && \
 #     yum install python3 zip -y && \
 #     pip3 install -r /tmp/requirements.txt --target ./package && \
