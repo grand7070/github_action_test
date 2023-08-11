@@ -30,6 +30,6 @@ RUN yum install python3 zip -y && \
     # && echo "Fourth!" && ls && \
     zip -r9 ../lambda.zip . && \
     cd ../libvips && zip -r9 ../lambda.zip . && \
-    cd .. && zip -r9 ../lambda.zip lambda_function_original.py lambda_function.py
+    cd .. && zip -r9 lambda.zip lambda_function_original.py lambda_function.py
     # && \
     # cd .. && echo "Fifth!" && ls && zip lambda.zip /var/task/libvips/ lambda_function_original.py lambda_function.py
