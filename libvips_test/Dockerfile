@@ -3,7 +3,7 @@ FROM amazonlinux:2
 # general build stuff
 RUN yum update -y \
 	&& yum groupinstall -y "Development Tools" \
-	&& yum install -y wget tar
+	&& yum install -y wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
 
 # libvips needs libwebp 0.5 or later and the one on amazonlinux2 is 0.3.0, so
 # we have to build it ourselves
