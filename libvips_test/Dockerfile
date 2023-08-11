@@ -9,7 +9,7 @@ RUN yum update -y && \
 #     tar Jxvf vips-8.14.3.tar.xz && \
 #     cd vips-8.14.3 && \
 RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
-    tar xzf vips-8.10.5.tar.gz && \
+    tar zxvf vips-8.10.5.tar.gz && \
     cd vips-8.10.5 && \
     ./configure --prefix=/libvips && \
     make && \
