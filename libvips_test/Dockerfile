@@ -87,8 +87,9 @@ FROM public.ecr.aws/lambda/python:3.9
 #     meson compile && \
 #     meson test && \
 #     meson install
-RUN ls
-RUN cd .. && ls
+RUN pwd
+RUN cd .. && ls && pwd
+RUN cd .. && ls && pwd
 # RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
 #     tar zxvf vips-8.10.5.tar.gz && \
 #     cd vips-8.10.5 && \
