@@ -5,10 +5,10 @@ RUN yum update -y && \
     yum install wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
 
 # libvips 및 의존성 설치
-RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.gz && \
-    tar zxvf vips-8.14.3.tar.gz && \
+RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
+    xz -d vips-8.14.3.tar.xz && \
     cd vips-8.14.3 && \
-    ./configure --prefix=/var/task/libvips && \
+    ./configure --prefix=/libvips && \
     make && \
     make install
 
@@ -16,5 +16,5 @@ COPY requirements.txt /tmp
 COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    cd package && zip -r9 ../lambda.zip . && \
-    cd .. && zip lambda.zip /var/task/libvips/ lambda_function.py
+    cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
+    cd .. && zip lambda.zip /libvips/ lambda_function_original.py lambda_function.py
