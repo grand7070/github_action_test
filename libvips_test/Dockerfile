@@ -115,3 +115,4 @@ RUN yum install python3 zip -y && \
 #     echo "HERE" && ls && cd ../libvips && zip -r9 ../lambda.zip . && \
 #     cd .. && zip -r9 lambda.zip lambda_function.py
 #     # cd .. && zip -r9 lambda.zip /libvips/ lambda_function_original.py lambda_function.py
+CMD [ "app.lambda_handler" ]
