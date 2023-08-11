@@ -18,11 +18,11 @@ RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.
     cd vips-8.10.5 && \
     ./configure --prefix=/var/task/libvips && \
     make && \
-    make install && ls
+    make install && echo "First!" && ls && echo "Second!" && ls /var/task/libvips
 
 COPY requirements.txt /tmp
 COPY lambda_function.py lambda_function_original.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
-    ls && cd package && rm -r *.dist-info __pycache__ && ls && zip -r9 ../lambda.zip . && \
-    cd .. && ls && zip lambda.zip /var/task/libvips/ lambda_function_original.py lambda_function.py
+    echo "Third!" && ls && cd package && rm -r *.dist-info __pycache__ && echo "Fourth!" && ls && zip -r9 ../lambda.zip . && \
+    cd .. && echo "Fifth!" && ls && zip lambda.zip /var/task/libvips/ lambda_function_original.py lambda_function.py
