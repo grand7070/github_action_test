@@ -92,7 +92,7 @@ RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.
     cd vips-8.10.5 && \
     ./configure --prefix=/libvips && \
     make && \
-    make install
+    make install && ls
 
 COPY requirements.txt /tmp
 # COPY lambda_function.py lambda_function_original.py .
@@ -100,6 +100,6 @@ COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
     cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
-    cd ../libvips && zip -r9 ../lambda.zip . && \
+    echo "HERE" && ls && cd ../libvips && zip -r9 ../lambda.zip . && \
     cd .. && zip -r9 lambda.zip lambda_function.py
     # cd .. && zip -r9 lambda.zip /libvips/ lambda_function_original.py lambda_function.py
