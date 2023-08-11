@@ -87,12 +87,12 @@ RUN yum update -y && \
 #     meson compile && \
 #     meson test && \
 #     meson install
-RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
+RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && echo "First" && ls && \
     tar zxvf vips-8.10.5.tar.gz && \
     cd vips-8.10.5 && \
     ./configure --prefix=/libvips && \
     make && \
-    make install && ls
+    make install && echo "Second" && ls
 
 COPY requirements.txt /tmp
 # COPY lambda_function.py lambda_function_original.py .
@@ -100,6 +100,10 @@ COPY lambda_function.py .
 RUN yum install python3 zip -y && \
     pip3 install -r /tmp/requirements.txt --target ./package && \
     cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
-    echo "HERE" && ls && cd ../libvips && zip -r9 ../lambda.zip . && \
-    cd .. && zip -r9 lambda.zip lambda_function.py
-    # cd .. && zip -r9 lambda.zip /libvips/ lambda_function_original.py lambda_function.py
+    cd .. && zip -r9 lambda.zip /libvips/ lambda_function_original.py lambda_function.py
+# RUN yum install python3 zip -y && \
+#     pip3 install -r /tmp/requirements.txt --target ./package && \
+#     cd package && rm -r *.dist-info __pycache__ && zip -r9 ../lambda.zip . && \
+#     echo "HERE" && ls && cd ../libvips && zip -r9 ../lambda.zip . && \
+#     cd .. && zip -r9 lambda.zip lambda_function.py
+#     # cd .. && zip -r9 lambda.zip /libvips/ lambda_function_original.py lambda_function.py
