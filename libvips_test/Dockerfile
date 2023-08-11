@@ -74,9 +74,9 @@
 
 FROM public.ecr.aws/lambda/python:3.9
 
-RUN yum update -y && \
-    yum groupinstall "Development Tools" -y && \
-    yum install wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
+# RUN yum update -y && \
+#     yum groupinstall "Development Tools" -y && \
+#     yum install wget tar gcc-c++ pkgconfig glib2 glib2-devel expat-devel -y
 
 # libvips 및 의존성 설치
 # RUN wget https://github.com/libvips/libvips/releases/download/v8.14.3/vips-8.14.3.tar.xz && \
@@ -87,7 +87,8 @@ RUN yum update -y && \
 #     meson compile && \
 #     meson test && \
 #     meson install
-RUN ls && cd .. && ls
+RUN ls
+RUN cd .. && ls
 # RUN wget https://github.com/libvips/libvips/releases/download/v8.10.5/vips-8.10.5.tar.gz && \
 #     tar zxvf vips-8.10.5.tar.gz && \
 #     cd vips-8.10.5 && \
