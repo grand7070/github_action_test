@@ -14,13 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/docker-layers
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+#       - name: Cache Docker layers
+#         uses: actions/cache@v2
+#         with:
+#           path: /tmp/docker-layers
+#           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+#           restore-keys: |
+#             ${{ runner.os }}-docker-
       
       - name: Docker work
         run: |
@@ -28,7 +28,6 @@ jobs:
           docker build --tag pyvips_on_lambda:python39 .
           docker run --name pyvips_on_lambda_container pyvips_on_lambda:python39
           docker cp pyvips_on_lambda_container:/lambda.zip .
-          ls
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
