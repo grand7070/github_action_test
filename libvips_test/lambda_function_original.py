@@ -3,11 +3,11 @@ import boto3
 import base64
 import io
 import pyvips
+import os
 
-os.environ['LD_LIBRARY_PATH'] = '/var/task/libvips/lib'
 s3_bucket_name = "test-le"
 s3_client = boto3.client("s3")
-
+print(f"real : {os.environ['LD_LIBRARY_PATH']}")
 
 def get_s3_object(s3_object_key):
     try:
