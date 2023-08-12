@@ -1,7 +1,7 @@
 'use strict';
 
-const querystring = require('querystring'); // Don't install.
-const AWS = require('aws-sdk'); // Don't install.
+const querystring = require('querystring');
+const AWS = require('aws-sdk');
 const Sharp = require('sharp');
 
 const S3 = new AWS.S3({
