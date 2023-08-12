@@ -11,7 +11,7 @@ const BUCKET = 'asdasd3';
 
 exports.handler = async (event, context, callback) => {
   const { request, response } = event.Records[0].cf;
-  if (response.status !== 200) {
+  if (Number(response.status) !== 200) {
     console.error(`response status is ${response.status}, not 200`);
     return callback(null, response);
   }
