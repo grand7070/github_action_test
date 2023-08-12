@@ -15,10 +15,14 @@ exports.handler = async (event, context, callback) => {
     console.error(`response status is ${response.status}, not 200`);
     return callback(null, response);
   }
-  
+  console.log(`parmas: ${request.querystring}`);
   // Parameters are w, h, f, q and indicate width, height, format and quality.
   const params = querystring.parse(request.querystring);
-
+  console.log(`parmas: ${JSON.stringify(params)}`);
+  const { uri } = request;
+  const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
+  console.log(`name: ${imageName}.${extension}`);
+  
   // Required width or height value.
   if (!params.w || !params.h) {
     console.error(`query parameter is wrong. w,h,f,q : ${params.w},${params.h},${params.f},${params.q}`);
