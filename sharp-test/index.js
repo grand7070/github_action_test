@@ -21,7 +21,7 @@ exports.handler = async (event, context, callback) => {
 
   // Required width or height value.
   if (!params.w || !params.h) {
-    console.error(`query parameter is wrong. w,h,f,q : ${w},${h},${f},${q}`);
+    console.error(`query parameter is wrong. w,h,f,q : ${params.w},${params.h},${params.f},${params.q}`);
     return callback(null, response);
   }
 
