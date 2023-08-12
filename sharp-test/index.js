@@ -7,7 +7,7 @@ const Sharp = require('sharp');
 const S3 = new AWS.S3({
   region: 'ap-northeast-2'
 });
-const BUCKET = 'asdasd3';
+const BUCKET = 'test-le';
 
 exports.handler = async (event, context, callback) => {
   const { request, response } = event.Records[0].cf;
@@ -15,15 +15,9 @@ exports.handler = async (event, context, callback) => {
     console.error(`response status is ${response.status}, not 200`);
     return callback(null, response);
   }
-  console.error(`event: ${JSON.stringify(event)}`);
-  console.error(`event: ${JSON.stringify(event.Records[0])}`);
-  console.error(`parmas: ${request.querystring}`);
+  
   // Parameters are w, h, f, q and indicate width, height, format and quality.
   const params = querystring.parse(request.querystring);
-  console.error(`parmas: ${JSON.stringify(params)}`);
-  const { uri } = request;
-  const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
-  console.error(`name: ${imageName}.${extension}`);
   
   // Required width or height value.
   if (!params.w || !params.h) {
@@ -32,8 +26,8 @@ exports.handler = async (event, context, callback) => {
   }
 
   // Extract name and format.
-  // const { uri } = request;
-  // const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
+  const { uri } = request;
+  const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
 
   // Init variables
   let width;
