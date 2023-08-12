@@ -18,5 +18,5 @@ RUN npm init -f -y \
     && npm install querystring --save \
     && npm install request --save \
     && npm install --only=prod \
-    && cd build && rm -rf node_modules/sharp
-    && zip -r9q /lambda.zip *
+    && rm -rf node_modules/sharp \
+    && cd build && zip -r9q /lambda.zip *
