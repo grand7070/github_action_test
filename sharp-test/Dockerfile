@@ -22,7 +22,7 @@ FROM amazonlinux:2
 WORKDIR /tmp
 
 RUN yum -y update \
-    && yum -y install gcc-c++ findutils tar gzip glibc
+    && yum -y install gcc-c++ findutils tar gzip glibc zip
 
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
 
