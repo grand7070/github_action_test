@@ -7,7 +7,8 @@ COPY index.js ${LAMBDA_TASK_ROOT}
 # RUN npm cache clean --force && rm -rf node_modules
 
 ## update the dockerfile with the following lines:
-RUN npm init -f -y \
+RUN yum -y update && yum -y install zip \
+    && npm init -f -y \
     && npm install querystring --save \
     && npm install request --save \
     && npm install --only=prod \
