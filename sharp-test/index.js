@@ -42,8 +42,8 @@ exports.handler = async (event, context, callback) => {
   height = parseInt(params.h, 10) ? parseInt(params.h, 10) : null;
 
   // Init quality.
-  quality = parseInt(params.q, 10);
-  if (quality >= 95) {
+  quality = parseInt(params.q, 10) ? parseInt(params.q, 10) : 95;
+  if (quality > 95) {
     quality = 95;
   }
   if (quality < 10) {
@@ -98,7 +98,7 @@ exports.handler = async (event, context, callback) => {
   response.headers['content-type'] = [
     {
       key: 'Content-Type',
-      value: `image/${format}`
+      value: `image/jpeg`
     }
   ];
   return callback(null, response);
