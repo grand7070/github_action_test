@@ -15,10 +15,11 @@ exports.handler = async (event, context, callback) => {
     console.error(`response status is ${response.status}, not 200`);
     return callback(null, response);
   }
-  console.log(`parmas: ${request.querystring}`);
+  console.error(`event: ${JSON.stringify(event)}`);
+  console.error(`parmas: ${request.querystring}`);
   // Parameters are w, h, f, q and indicate width, height, format and quality.
   const params = querystring.parse(request.querystring);
-  console.log(`parmas: ${JSON.stringify(params)}`);
+  console.error(`parmas: ${JSON.stringify(params)}`);
   const { uri } = request;
   const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
   console.log(`name: ${imageName}.${extension}`);
