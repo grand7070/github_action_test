@@ -18,6 +18,7 @@ exports.handler = async (event, context, callback) => {
   
   // Parameters are w, h, f, q and indicate width, height, format and quality.
   const params = querystring.parse(request.querystring);
+  console.log(`parmas: ${JSON.stringify(params)}`); // Cannot convert object to primitive value.
   
   // Required width or height value.
   if (!params.w || !params.h) {
@@ -28,7 +29,8 @@ exports.handler = async (event, context, callback) => {
   // Extract name and format.
   const { uri } = request;
   const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
-
+  console.log(`name: ${imageName}.${extension}`); // Favicon error, if name is `favicon.ico`.
+  
   // Init variables
   let width;
   let height;
@@ -53,10 +55,6 @@ exports.handler = async (event, context, callback) => {
   // Init format.
   // format = params.f ? params.f : extension;
   // format = format === 'jpg' ? 'jpeg' : format;
-
-  // For AWS CloudWatch.
-  console.log(`parmas: ${JSON.stringify(params)}`); // Cannot convert object to primitive value.
-  console.log(`name: ${imageName}.${extension}`); // Favicon error, if name is `favicon.ico`.
 
   try {
     s3Object = await S3.getObject({
