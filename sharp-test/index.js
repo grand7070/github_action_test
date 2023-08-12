@@ -88,6 +88,7 @@ exports.handler = async (event, context, callback) => {
   // `response.body`가 변경된 경우 1MB까지만 허용됩니다.
   if (resizedImageByteLength >= 1 * 1000 * 1000) {
     // TODO
+    console.log(`image size ${resizedImageByteLength} is upper than 1MB`);
     return callback(null, response);
   }
 
