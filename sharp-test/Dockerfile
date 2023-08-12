@@ -14,9 +14,11 @@ RUN source ~/.bashrc \
 
 WORKDIR /build
 
+COPY index.js .
+
 RUN npm init -f -y \
     && npm install querystring --save \
     && npm install request --save \
     && npm install --only=prod \
-    && rm -rf node_modules/sharp \
-    && cd build && zip -r9q /lambda.zip *
+    && SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux sharp \
+    && zip -r9q /lambda.zip *
