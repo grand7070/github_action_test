@@ -29,7 +29,7 @@ RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 RUN source ~/.bashrc \
-    && nvm install 18
+    && nvm install 14
 
 WORKDIR /build
 
