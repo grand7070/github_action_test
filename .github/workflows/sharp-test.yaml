@@ -1,0 +1,40 @@
+name: sharp-test
+
+on:
+  workflow_dispatch:
+  
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  build_and_zip_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker work
+        run: |
+          cd sharp-test
+          docker build --tag sharp_on_lambda:nodejs18 .
+          docker run --name sharp_on_lambda_container sharp_on_lambda:nodejs18
+          docker cp sharp_on_lambda_container:/lambda.zip .
+          yum -y update
+          yum -y install npm zip
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux sharp
+          zip -r9q lambda.zip sharp
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::712977191926:role/GHTest
+          aws-region: ap-northeast-2
+      
+      - name: Upload AWS
+        run: |
+          cd sharp-test
+          aws lambda update-function-code \
+          --region us-east-1 \
+          --function-name asdasd3 \
+          --zip-file fileb://lambda.zip
