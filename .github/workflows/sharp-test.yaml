@@ -18,7 +18,7 @@ jobs:
         run: |
           cd sharp-test
           docker build --tag sharp_on_lambda:nodejs18 .
-          docker run --rm --name sharp_on_lambda_container sharp_on_lambda:nodejs18
+          docker run --name sharp_on_lambda_container sharp_on_lambda:nodejs18
           docker cp sharp_on_lambda_container:/lambda.zip .
       
       - name: Configure AWS Credentials
