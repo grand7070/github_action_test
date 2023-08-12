@@ -23,7 +23,7 @@ jobs:
           yum -y update
           yum -y install npm zip
           SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux sharp
-          zip -r9q lambda.zip sharp
+          zip -r9q lambda.zip sharp index.js
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
