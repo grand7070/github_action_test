@@ -16,13 +16,14 @@ exports.handler = async (event, context, callback) => {
     return callback(null, response);
   }
   console.error(`event: ${JSON.stringify(event)}`);
+  console.error(`event: ${JSON.stringify(event.Records[0])}`);
   console.error(`parmas: ${request.querystring}`);
   // Parameters are w, h, f, q and indicate width, height, format and quality.
   const params = querystring.parse(request.querystring);
   console.error(`parmas: ${JSON.stringify(params)}`);
   const { uri } = request;
   const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
-  console.log(`name: ${imageName}.${extension}`);
+  console.error(`name: ${imageName}.${extension}`);
   
   // Required width or height value.
   if (!params.w || !params.h) {
@@ -31,8 +32,8 @@ exports.handler = async (event, context, callback) => {
   }
 
   // Extract name and format.
-  const { uri } = request;
-  const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
+  // const { uri } = request;
+  // const [, imageName, extension] = uri.match(/\/?(.*)\.(.*)/);
 
   // Init variables
   let width;
