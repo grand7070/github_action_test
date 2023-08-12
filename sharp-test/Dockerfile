@@ -3,7 +3,7 @@ FROM amazonlinux:2
 WORKDIR /tmp
 
 RUN yum -y update \
-    && yum -y install gcc-c++ findutils tar gzip glibc
+    && yum -y install gcc-c++ findutils tar gzip glibc npm
 
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
 
@@ -14,8 +14,7 @@ RUN source ~/.bashrc \
 
 WORKDIR /build
 
-RUN source ~/.bashrc \
-    && npm init -f -y \
+RUN npm init -f -y \
     && npm install querystring --save \
     && npm install request --save \
     && npm install --only=prod \
