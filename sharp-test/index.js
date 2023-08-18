@@ -10,6 +10,7 @@ const S3 = new AWS.S3({
 const BUCKET = "BUCKET_NAME";
 
 exports.handler = async (event, context, callback) => {
+  console.log(`event: ${JSON.stringify(event.Records[0])}`);
   const { request, response } = event.Records[0].cf;
   if (Number(response.status) !== 200) {
     console.error(`response status is ${response.status}, not 200`);
