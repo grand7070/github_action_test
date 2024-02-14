@@ -52,4 +52,4 @@ jobs:
           git push origin deploy/$IMAGE_TAG
           PR_URL=$(gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG)
           # gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG
-          gh merge $PR_URL
+          gh pr merge $PR_URL
