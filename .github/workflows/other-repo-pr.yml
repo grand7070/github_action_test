@@ -57,5 +57,5 @@ jobs:
           git add ${GITHUB_REF##*/}.tfvars
           git commit -m "Update image tag"
           git push origin stage
-          gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base main --head stage
+          gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base main --head origin/stage
           
