@@ -1,0 +1,55 @@
+name: other-repo-pr
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Variable
+        id: set-variable
+        run: |
+          echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Checkout Test Repository
+        uses: actions/checkout@v3
+        with:
+          path: terraform
+          repository: 'grand7070/test'
+          token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
+          ref: stage
+
+      - name: Update
+        env:
+          IMAGE_TAG_VARIABLE: "image_tag"
+          IMAGE_TAG: ${{ steps.set-variable.outputs.IMAGE_TAG }}
+        run: |
+          cd terraform
+          cat ${GITHUB_REF##*/}.tfvars
+          sed -i "s/${IMAGE_TAG_VARIABLE} = \".*\"/${IMAGE_TAG_VARIABLE} = \"$IMAGE_TAG\"/" ${GITHUB_REF##*/}.tfvars
+          cat ${GITHUB_REF##*/}.tfvars
+
+      - name: Commit and Push Changes
+        env:
+          IMAGE_TAG: ${{ steps.set-variable.outputs.IMAGE_TAG }}
+          GITHUB_TOKEN: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
+        run: |
+          cd terraform
+          git config user.name 'test'
+          git config user.email 'test@test.com'
+          git checkout -b deploy/$IMAGE_TAG
+          git add ${GITHUB_REF##*/}.tfvars
+          git commit -m "Update image tag"
+          git push origin stage
+          PR_URL=$(gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG)
+          # gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG
+          gh merge $PR_URL
