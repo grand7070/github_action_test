@@ -1,4 +1,4 @@
-name: other-repo-pr
+name: other-repo-push
 
 on:
   workflow_dispatch:
