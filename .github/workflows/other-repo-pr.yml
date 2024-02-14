@@ -33,7 +33,9 @@ jobs:
           IMAGE_TAG_VARIABLE: "image_tag"
           IMAGE_TAG: ${{ steps.set-variable.outputs.IMAGE_TAG }}
         run: |
+          ls -al
           cd terraform/
+          ls -al
           sed -i 's/$IMAGE_TAG_VARIABLE = ".*"/$IMAGE_TAG_VARIABLE = "'$IMAGE_TAG'"/' ${{ github.ref }}.tfvars
 
       # - name: Commit and Push Changes
