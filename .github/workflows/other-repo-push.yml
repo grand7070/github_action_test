@@ -49,7 +49,7 @@ jobs:
           git checkout -b deploy/$IMAGE_TAG
           git add ${GITHUB_REF##*/}.tfvars
           git commit -m "Update image tag"
-          git push origin stage
+          git push origin deploy/$IMAGE_TAG
           PR_URL=$(gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG)
           # gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG
           gh merge $PR_URL
