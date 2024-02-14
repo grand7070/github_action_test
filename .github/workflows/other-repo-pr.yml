@@ -51,6 +51,8 @@ jobs:
       #     gh merge deploy/$IMAGE_TAG
 
       - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           # git checkout -b new-branch-for-pr
           cd terraform
@@ -59,7 +61,9 @@ jobs:
           git config user.email 'test@test.com'
           git add ${GITHUB_REF##*/}.tfvars
           git commit -m "Update image tag"
+          echo "HI"
           git status
+          echo "HI"
           git push origin stage
           gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base main --head stage
           
