@@ -51,5 +51,7 @@ jobs:
           git commit -m "Update image tag"
           git push origin deploy/$IMAGE_TAG
           PR_URL=$(gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG)
-          # gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base stage --head deploy/$IMAGE_TAG
-          gh pr merge $PR_URL
+          echo $PR_URL
+          PR_NUMBER=$(echo $PR_URL | grep -o '[0-9]*$')
+          echo $PR_NUMBER
+          gh pr merge $PR_NUMBER
