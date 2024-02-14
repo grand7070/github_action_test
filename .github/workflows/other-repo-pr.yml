@@ -52,7 +52,8 @@ jobs:
 
       - name: Create Pull Request
         env:
-          GH_TOKEN: ${{ github.token }}
+          # GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
         run: |
           # git checkout -b new-branch-for-pr
           cd terraform
