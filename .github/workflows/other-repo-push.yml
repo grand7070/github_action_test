@@ -54,4 +54,4 @@ jobs:
           echo $PR_URL
           PR_NUMBER=$(echo $PR_URL | grep -o '[0-9]*$')
           echo $PR_NUMBER
-          gh pr merge $PR_NUMBER
+          gh pr merge $PR_URL --merge
