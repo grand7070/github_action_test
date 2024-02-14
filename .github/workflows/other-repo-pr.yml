@@ -34,6 +34,7 @@ jobs:
           IMAGE_TAG: ${{ steps.set-variable.outputs.IMAGE_TAG }}
         run: |
           cd terraform
+          cat ${GITHUB_REF##*/}.tfvars
           sed -i 's/$IMAGE_TAG_VARIABLE = ".*"/$IMAGE_TAG_VARIABLE = "'$IMAGE_TAG'"/' ${GITHUB_REF##*/}.tfvars
 
       # - name: Commit and Push Changes
@@ -52,10 +53,12 @@ jobs:
         run: |
           # git checkout -b new-branch-for-pr
           cd terraform
+          cat ${GITHUB_REF##*/}.tfvars
           git config user.name 'test'
           git config user.email 'test@test.com'
           git add ${GITHUB_REF##*/}.tfvars
           git commit -m "Update image tag"
+          git status
           git push origin stage
-          gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base main --head origin/stage
+          gh pr create --title "Update image tag" --body "Automated PR to update image tag" --base main --head stage
           
