@@ -8,8 +8,6 @@ on:
       - closed
   workflow_dispatch:
 
-
-
 jobs:
   echo:
     if: true
