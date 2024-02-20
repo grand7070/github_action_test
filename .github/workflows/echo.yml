@@ -18,10 +18,14 @@ jobs:
 
       - name: ECHO
         run: |
-          echo ${{ github.event_name == 'workflow_dispatch' }}
-          echo ${{ github.event_name == 'pull_request' }}
-          echo ${{ github.event.pull_request.merged == true }}
-          echo ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true }}
-          echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}
-          echo ${{ github.ref == 'refs/heads/echo_test' }}
-          echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}&& ${{ github.ref == 'refs/heads/echo_test' }}
+          echo "is manual? : " + ${{ github.event_name == 'workflow_dispatch' }}
+          echo "is pr? : " + ${{ github.event_name == 'pull_request' }}
+          echo "is pr merge? : " + ${{ github.event.pull_request.merged == true }}
+          echo "is pr and pr merge? : " + ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true }}
+          echo "is manual or (pr and pr merge)? : " + ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}
+          echo "branch from : " + ${{ github.head_ref }}
+          echo "branch to : " + ${{ github.base_ref }}
+          echo "branch from is main? : + ${{ github.head_ref == 'main' }}
+          echo "branch to is echo_test? : + ${{ github.base_ref == 'echo_test' }}
+          echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}&& ${{ github.head_ref == 'base_ref' }}
+ 
