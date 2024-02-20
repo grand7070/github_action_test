@@ -27,5 +27,5 @@ jobs:
           echo "branch to : " ${{ github.base_ref }}
           echo "branch from is main? : " ${{ github.head_ref == 'main' }}
           echo "branch to is echo_test? : " ${{ github.base_ref == 'echo_test' }}
-          echo ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.head_ref == github.base_ref }}
+          echo ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.base_ref == 'echo_test' }}
  
