@@ -3,7 +3,7 @@ name: echo
 on:
   pull_request:
     branches:
-      - main
+      - echo_test
     types:
       - closed
   workflow_dispatch:
@@ -23,5 +23,5 @@ jobs:
           echo ${{ github.event.pull_request.merged == true }}
           echo ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true }}
           echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}
-          echo ${{ github.ref == 'refs/heads/main' }}
-          echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}&& ${{ github.ref == 'refs/heads/main' }}
+          echo ${{ github.ref == 'refs/heads/echo_test' }}
+          echo ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}&& ${{ github.ref == 'refs/heads/echo_test' }}
