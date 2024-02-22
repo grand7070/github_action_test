@@ -3,14 +3,57 @@ name: jq
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  LAMBDA: test
+
 jobs:
-  jq:
-    if: true
+  upload_zip_to_lambda:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+          aws-region: ap-northeast-2
 
-      - name: ECHO
+      - name: Lambda
+        id: lambda
         run: |
-          echo '{"foo1": "bar1", "foo2": "bar2"}' | jq '.foo1'
+          echo "LAMBDA_ARN=$(
+            aws lambda publish-version \
+            --region ap-northeast-2 \
+            --function-name ${{ env.LAMBDA }} \
+            --query 'FunctionArn'\
+            --output text
+          )" >> $GITHUB_OUTPUT
+          
+          echo $LAMBDA_ARN
+
+      - name: Distribute Lambda@Edge
+        env:
+          LAMBDA_ARN: ${{ steps.lambda.outputs.LAMBDA_ARN }}
+        run: |
+          echo $LAMBDA_ARN
+          
+          aws cloudfront get-distribution-config \
+          --id ${{ secrets.PRD_IMAGE_CLOUDFRONT_ID }} \
+          --output json > distribution-config-with-etag.json
+          cat distribution-config-with-etag.json
+
+          ETag=$(jq -r '.ETag' distribution-config-with-etag.json)
+          echo $Etag
+          jq -r '.DistributionConfig' distribution-config-with-etag.json > distribution-config.json
+          cat distribution-config.json
+
+          jq --arg lambda_arn $LAMBDA_ARN \
+          '.DefaultCacheBehavior.LambdaFunctionAssociations.Items[0].LambdaFunctionARN = $lambda_arn' \
+          distribution-config.json > modified-config.json
+          cat modified-config.json
