@@ -46,8 +46,8 @@ jobs:
                     short: false
                   },
                   {
-                    "title": "Resource",
-                    "value": "${{ contains(github.event.pull_request.body, '[User Web]') && 'User Web' || contains(github.event.pull_request.body, '[Admin Web]') && 'Admin Web' || contains(github.event.pull_request.body, '[API]') && 'API' || 'Infra' }}",
+                    "title": 'Resource',
+                    "value": '${{ contains(github.event.pull_request.body, '[User Web]') && 'User Web' || contains(github.event.pull_request.body, '[Admin Web]') && 'Admin Web' || contains(github.event.pull_request.body, '[API]') && 'API' || 'Infra' }}',
                     "short": false
                   }
                   {
