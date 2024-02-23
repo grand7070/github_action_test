@@ -22,7 +22,7 @@ jobs:
 
       - name: Echo
         id: echo
-        run: \
+        run: |
           echo "HI"
           echo ${{ github.event_name }}
           echo ${{ github.base_ref }}
@@ -54,7 +54,7 @@ jobs:
                     short: false
                   }
                 }]
-            }
+            }]
         env:
           SLACK_WEBHOOK_URL: ${{ (github.event_name == 'workflow_dispatch' && secrets.BACKEND_SLACK_WEBHOOK_URL) || (github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Web]') && secrets.FRONTEND_SLACK_WEBHOOK_URL) || secrets.BACKEND_SLACK_WEBHOOK_URL }}
-        if: always()
+
