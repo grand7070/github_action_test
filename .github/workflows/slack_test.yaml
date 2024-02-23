@@ -23,7 +23,7 @@ jobs:
       - name: Echo
         id: echo
         run: |
-          echo "HI"
+          echo "HI!"
           echo ${{ github.event_name }}
           echo ${{ github.base_ref }}
           echo ${{ github.head_ref }}
