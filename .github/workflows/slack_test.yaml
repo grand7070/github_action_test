@@ -26,6 +26,8 @@ jobs:
           echo "HI"
           echo ${{ github.event_name }}
           echo ${{ github.base_ref }}
+          echo ${{ github.head_ref }}
+          echo ${{ github.ref }}
 
       - name: CD notification to Slack
         uses: 8398a7/action-slack@v3
