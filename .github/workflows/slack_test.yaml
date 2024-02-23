@@ -39,7 +39,7 @@ jobs:
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
                 title: 'Test',
-                fields: [{
+                fields: [
                   {
                     title: 'Result',
                     value: '${{ job.status }}' === 'success' ? 'Success' : 'Fail',
@@ -55,7 +55,7 @@ jobs:
                     value: '${process.env.AS_WORKFLOW}',
                     short: false
                   }
-                }]
+                ]
               }]
             }
         env:
