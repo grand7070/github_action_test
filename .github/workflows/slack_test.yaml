@@ -36,7 +36,6 @@ jobs:
           fields: repo,workflow,job
           custom_payload: |
             {
-              title: 'Test',
               text: 'Test2',
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
@@ -61,18 +60,3 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ (github.event_name == 'workflow_dispatch' && secrets.BACKEND_SLACK_WEBHOOK_URL) || (github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Web]') && secrets.FRONTEND_SLACK_WEBHOOK_URL) || secrets.BACKEND_SLACK_WEBHOOK_URL }}
-
-      # - uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: custom
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     custom_payload: |
-      #       {
-      #         attachments: [{
-      #           color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-      #           text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-      #         }]
-      #       }        
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.BACKEND_SLACK_WEBHOOK_URL }}
-      #   if: always()
