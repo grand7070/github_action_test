@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   slack-test:
-    # if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.base_ref == 'main' }}
+    if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.ref == 'main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
           fields: repo,workflow,job
           custom_payload: |
             {
-              text: 'Test2',
+              text: '*[test]* Test2',
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
                 fields: [
@@ -45,6 +45,11 @@ jobs:
                     value: '${{ job.status }}' === 'success' ? 'Success' : 'Fail',
                     short: false
                   },
+                  {
+                    "title": "Resource",
+                    "value": "${{ contains(github.event.pull_request.body, '[User Web]') && 'User Web' || contains(github.event.pull_request.body, '[Admin Web]') && 'Admin Web' || contains(github.event.pull_request.body, '[API]') && 'API' || 'Infra' }}",
+                    "short": false
+                  }
                   {
                     title: 'Repository',
                     value: `${process.env.AS_REPO}`,
