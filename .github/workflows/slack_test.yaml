@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   slack-test:
-    if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.base_ref == 'main' }}
+    # if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)) && github.base_ref == 'main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,7 +22,10 @@ jobs:
 
       - name: Echo
         id: echo
-        run: echo "HI"
+        run: \
+          echo "HI"
+          echo ${{ github.event_name }}
+          echo ${{ github.base_ref }}
 
       - name: CD notification to Slack
         uses: 8398a7/action-slack@v3
